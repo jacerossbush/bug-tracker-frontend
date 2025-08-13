@@ -21,7 +21,7 @@ export class LoginComponent {
       password: this.password
     }).subscribe({
       next: (res) => {
-        this.router.navigate(['/issues']);
+        this.router.navigate(['/dashboard']);
       },
       error: (err) => {
         alert('Login failed!' + err.message);
