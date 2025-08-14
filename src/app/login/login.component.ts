@@ -19,7 +19,7 @@ export class LoginComponent {
     this.http.post('http://localhost:3000/login', {
       username: this.username,
       password: this.password
-    }).subscribe({
+    }, { withCredentials: true }).subscribe({
       next: (res) => {
         this.router.navigate(['/dashboard']);
       },

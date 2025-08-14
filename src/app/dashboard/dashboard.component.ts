@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.http.get<any[]>('http://localhost:3000/issue/all').subscribe({
+    this.http.get<any[]>('http://localhost:3000/issue/all', { withCredentials: true }).subscribe({
       next: (data) => {
         this.issues = data;
         this.loading = false;
