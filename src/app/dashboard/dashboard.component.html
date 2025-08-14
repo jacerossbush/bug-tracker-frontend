@@ -1,18 +1,71 @@
 <div class="dashboard-container">
-  <nav class="sidebar">
-    <ul>
-      <li><a routerLink="/dashboard">Dashboard</a></li>
+  <nav class="sidebar bg-light border-end">
+    <div class="sidebar-header py-4 px-3 mb-3 border-bottom">
+      <h4 class="fw-bold mb-0">Bug Tracker</h4>
+    </div>
+    <ul class="nav flex-column">
+      <li class="nav-item mb-2">
+        <a class="nav-link active" routerLink="/dashboard">
+          <i class="bi bi-house-door me-2"></i> Dashboard
+        </a>
+      </li>
       <!-- Add more navigation links here -->
     </ul>
   </nav>
-  <main class="main-content">
-    <h2>Issues</h2>
-    <div *ngIf="loading">Loading...</div>
-    <div *ngIf="!loading && issues.length === 0">No current issues</div>
-    <ul *ngIf="!loading && issues.length > 0">
-      <li *ngFor="let issue of issues">
-        {{ issue.title }}
-      </li>
-    </ul>
+  <main class="main-content p-4">
+    <div class="container-fluid">
+      <h2 class="mb-4 fw-semibold">Issues</h2>
+      <div *ngIf="loading" class="text-center my-5">
+        <div class="spinner-border text-primary" role="status"></div>
+        <span class="ms-2">Loading...</span>
+      </div>
+      <div *ngIf="!loading && issues.length === 0" class="alert alert-info shadow-sm">
+        No current issues
+      </div>
+      <div *ngIf="!loading && issues.length > 0">
+        <div class="card shadow-sm">
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-hover align-middle mb-0">
+                <thead class="table-primary sticky-top">
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Created By</th>
+                    <th scope="col">Assigned To</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Priority</th>
+                    <th scope="col">Due Date</th>
+                    <th scope="col">Last Updated</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let issue of issues" class="table-row">
+                    <td>{{ issue.id ?? '-' }}</td>
+                    <td class="fw-semibold">{{ issue.title ?? '-' }}</td>
+                    <td>{{ issue.description ?? '-' }}</td>
+                    <td>{{ issue.created_by ?? '-' }}</td>
+                    <td>{{ issue.assigned_to ?? '-' }}</td>
+                    <td>
+                      <span class="badge bg-secondary">{{ issue.status_id ?? '-' }}</span>
+                    </td>
+                    <td>
+                      <span [ngClass]="{
+                        'badge bg-danger': issue.priority === 'High',
+                        'badge bg-warning text-dark': issue.priority === 'Medium',
+                        'badge bg-success': issue.priority === 'Low'
+                      }">{{ issue.priority ?? '-' }}</span>
+                    </td>
+                    <td>{{ issue.due_date ? (issue.due_date | date:'short') : '-' }}</td>
+                    <td>{{ issue.last_updated ? (issue.last_updated | date:'short') : '-' }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 </div>
